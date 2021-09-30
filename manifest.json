@@ -1,0 +1,31 @@
+{
+  "name": "How much BTC",
+  "description": "Online translator that inserts BTC for EUR and USD",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "run_at": "document_end",
+      "js": ["libs/jquery-3.6.0.min.js", "content-script.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "/iconmenu/iconmenu.html",
+    "default_icon": {
+      "16": "/images/hmbtc_logo16.png",
+      "32": "/images/hmbtc_logo32.png",
+      "48": "/images/hmbtc_logo48.png",
+      "128": "/images/hmbtc_logo128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/hmbtc_logo16.png",
+    "32": "/images/hmbtc_logo32.png",
+    "48": "/images/hmbtc_logo48.png",
+    "128": "/images/hmbtc_logo128.png"
+  }
+}
