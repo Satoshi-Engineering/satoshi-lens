@@ -43,7 +43,7 @@ let formatWithWord = {
     regex : /[0-9]+[0-9\.\,]*[0-9]+ (?:[a-zA-Z]+\ )euro[\ \.\,\!\?]/gmi,
     value : "eur",
     convert : (text) => {
-        return false;
+        //return false;
 
         text = text.trim();
         text = text.split(" ");
@@ -63,22 +63,31 @@ let formatWithWord = {
 }
 formatDict.push(formatWithWord);
 
-
-$("body").html().matchAll(/[0-9\.\,]+ euro[\ \.\,\!\?]/gmi);
-
 $("*").filter(function() {
     let element = $(this);
 
     if (element.children().length !== 0) return false;
     if (element.prop("tagName") == "SCRIPT") return false;
+    if (element.prop("tagName") == "STYLE") return false;
+    if (element.prop("tagName") == "BR") return false;
+    if (element.prop("tagName") == "IFRAME") return false;
+    if (element.prop("tagName") == "META") return false;
+    if (element.prop("tagName") == "NOSCRIPT") return false;
+    if (element.prop("tagName") == "svg") return false;
+
+    if (element.html().includes("<script")) return false;
 
     formatDict.forEach(format => {
         let matches = element.html().matchAll(format.regex);
-        if (matches.done) return true;
+        matches = [...matches];
+        if (matches.length <= 0) return true;
 
         let sizechange = 0;
 
-        for (const match of matches) {
+        console.log("ELEMENT FOUND -------");
+        console.log(element.html());
+        for (let i = 0; i < matches.length; ++i) {
+            let match = matches[i];
            console.log(match[0]);
            let value = format.convert(match[0]);
            if (value == false) continue;
@@ -95,10 +104,12 @@ $("*").filter(function() {
            text+= btctext;
            text+= element.html().substring(match.index + sizechange + match[0].length);
 
-            element.html(text);
+           element.html(text);
 
-            sizechange = btctext - match[0].length;
+           sizechange += btctext.length - match[0].length;
         };
+        console.log(element.html());
+        console.log("ELEMENT DONE -------");
     });
     return false;
 });
