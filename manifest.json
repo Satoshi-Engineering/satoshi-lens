@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "matches": ["https://*/*"],
-      "run_at": "document_end",
+      "run_at": "document_idle",
       "js": ["libs/jquery-3.6.0.min.js", "content-script.js"]
     }
   ],

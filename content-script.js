@@ -1,21 +1,104 @@
 console.log("Content Script");
 
-let pagetext = document.getElementsByTagName("body")[0].innerHTML;
+document.hmbtc = {};
 
-const regexp = new RegExp('foo[a-z]*','g');
-const str = 'table football, foosball';
-const matches = str.matchAll(regexp);
 
-let b = $(":contains('Mrd. Dollar')").filter(function() { return $(this).children().length === 0;});
-b.each((i) => {
-    console.log(i);
-    let t = b.eq(i);
-    console.log(t);
-    t = t.text();
-    console.log(t);
+let currencies = {
+    eur : 37181.49,
+    usd : 43039.42
+}
 
-    let start = t.indexOf('Mrd. Dollar');
-    let startAmount = t.lastIndexOf(" ", start - 1);
+let parseNumber = (text) => {
+    console.log("parseNumber Input: " + text);
+    text = text.trim();
+    if (text.indexOf(",") >= text.length - 3) {
+        text = text.replace(".", "");
+        text = text.replace(",", ".");
+    }
 
-    console.log(t.substr(startAmount, start - startAmount));
+    return parseFloat(text);
+}
+
+let convertToBTC = (number) => {
+    let btc = number / currencies["eur"];
+    btc = btc.toFixed(2);
+    return btc + " BTC";
+}
+
+let formatDict = [];
+let formatSimple = {
+    regex : /[0-9\.\,]+ euro[\ \.\,\!\?]/gmi,
+    value : "eur",
+    convert : (text) => {
+        text = text.trim();
+        text = text.split(" ");
+        text = text[0];
+        let number = parseNumber(text);
+        return number;
+    }
+}
+formatDict.push(formatSimple);
+
+let formatWithWord = {
+    regex : /[0-9]+[0-9\.\,]*[0-9]+ (?:[a-zA-Z]+\ )euro[\ \.\,\!\?]/gmi,
+    value : "eur",
+    convert : (text) => {
+        return false;
+
+        text = text.trim();
+        text = text.split(" ");
+        let word = text[1].toLowerCase();
+        console.log("Substantive " + word);
+        text = text[0];
+
+        let number = parseNumber(text);
+
+        if (word.includes("millio")) number = number * 1000000;
+        if (word.includes("millia")) number = number * 1000000000;
+        if (word.includes("billio")) number = number * 1000000000000;
+        if (word.includes("billia")) number = number * 1000000000000000;
+
+        return number;
+    }
+}
+formatDict.push(formatWithWord);
+
+
+$("body").html().matchAll(/[0-9\.\,]+ euro[\ \.\,\!\?]/gmi);
+
+$("*").filter(function() {
+    let element = $(this);
+
+    if (element.children().length !== 0) return false;
+    if (element.prop("tagName") == "SCRIPT") return false;
+
+    formatDict.forEach(format => {
+        let matches = element.html().matchAll(format.regex);
+        if (matches.done) return true;
+
+        let sizechange = 0;
+
+        for (const match of matches) {
+           console.log(match[0]);
+           let value = format.convert(match[0]);
+           if (value == false) continue;
+
+           console.log(value);
+           let btc = convertToBTC(value);
+           console.log(btc);
+
+           let btctext = `<span style="text-decoration: underline 2px darkorange solid">${btc}</span>`;
+           btctext+= " ";
+
+           let text = "";
+           text = element.html().substring(0, match.index + sizechange);
+           text+= btctext;
+           text+= element.html().substring(match.index + sizechange + match[0].length);
+
+            element.html(text);
+
+            sizechange = btctext - match[0].length;
+        };
+    });
+    return false;
 });
