@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/phorwath/how-much-btc/issues"
   },
-  "homepage": "https://github.com/phorwath/how-much-btc#readme"
+  "homepage": "https://github.com/phorwath/how-much-btc#readme",
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
 }

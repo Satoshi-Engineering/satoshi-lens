@@ -1,115 +1,48 @@
 console.log("Content Script");
 
-document.hmbtc = {};
 
+let settings = {
 
-let currencies = {
-    eur : 37181.49,
-    usd : 43039.42
 }
 
-let parseNumber = (text) => {
-    console.log("parseNumber Input: " + text);
-    text = text.trim();
-    if (text.indexOf(",") >= text.length - 3) {
-        text = text.replace(".", "");
-        text = text.replace(",", ".");
-    }
+let nodes = [];
 
-    return parseFloat(text);
-}
 
-let convertToBTC = (number) => {
-    let btc = number / currencies["eur"];
-    btc = btc.toFixed(2);
-    return btc + " BTC";
-}
+function start() {
+    //const probeEuro = /EUR|Euro|\€/g.test(document.body.textContent);
 
-let formatDict = [];
-let formatSimple = {
-    regex : /[0-9\.\,]+ euro[\ \.\,\!\?]/gmi,
-    value : "eur",
-    convert : (text) => {
-        text = text.trim();
-        text = text.split(" ");
-        text = text[0];
-        let number = parseNumber(text);
-        return number;
-    }
-}
-formatDict.push(formatSimple);
+    // Entfernen bei erstem Laden der Seite
+    let nodes = Editor.textNodesUnder(document);
+    Editor.remove(nodes);
 
-let formatWithWord = {
-    regex : /[0-9]+[0-9\.\,]*[0-9]+ (?:[a-zA-Z]+\ )euro[\ \.\,\!\?]/gmi,
-    value : "eur",
-    convert : (text) => {
-        //return false;
+    //Entfernen bei Seitenänderungen
+    try {
+        var observer = new MutationObserver(function(mutations) {
+            let insertedNodes = [];
+            mutations.forEach(function(mutation) {
+                for (var i = 0; i < mutation.addedNodes.length; i++) {
+                    insertedNodes = insertedNodes.concat(Editor.textNodesUnder(mutation.addedNodes[i]));
+                }
+            });
 
-        text = text.trim();
-        text = text.split(" ");
-        let word = text[1].toLowerCase();
-        console.log("Substantive " + word);
-        text = text[0];
-
-        let number = parseNumber(text);
-
-        if (word.includes("millio")) number = number * 1000000;
-        if (word.includes("millia")) number = number * 1000000000;
-        if (word.includes("billio")) number = number * 1000000000000;
-        if (word.includes("billia")) number = number * 1000000000000000;
-
-        return number;
+            console.log(`Found Mutations: ${insertedNodes.length}`);
+            Editor.remove(insertedNodes);
+        });
+        observer.observe(document, {
+            childList: true,
+            subtree: true,
+            attributes: false,
+            characterData: false
+        });
+    } catch (e) {
+        console.error(e);
+        chrome.runtime.sendMessage({
+            action: 'error',
+            page: document.location.hostname,
+            source: 'content-script.js',
+            error: e
+        });
     }
 }
-formatDict.push(formatWithWord);
 
-$("*").filter(function() {
-    let element = $(this);
-
-    if (element.children().length !== 0) return false;
-    if (element.prop("tagName") == "SCRIPT") return false;
-    if (element.prop("tagName") == "STYLE") return false;
-    if (element.prop("tagName") == "BR") return false;
-    if (element.prop("tagName") == "IFRAME") return false;
-    if (element.prop("tagName") == "META") return false;
-    if (element.prop("tagName") == "NOSCRIPT") return false;
-    if (element.prop("tagName") == "svg") return false;
-
-    if (element.html().includes("<script")) return false;
-
-    formatDict.forEach(format => {
-        let matches = element.html().matchAll(format.regex);
-        matches = [...matches];
-        if (matches.length <= 0) return true;
-
-        let sizechange = 0;
-
-        console.log("ELEMENT FOUND -------");
-        console.log(element.html());
-        for (let i = 0; i < matches.length; ++i) {
-            let match = matches[i];
-           console.log(match[0]);
-           let value = format.convert(match[0]);
-           if (value == false) continue;
-
-           console.log(value);
-           let btc = convertToBTC(value);
-           console.log(btc);
-
-           let btctext = `<span style="text-decoration: underline 2px darkorange solid">${btc}</span>`;
-           btctext+= " ";
-
-           let text = "";
-           text = element.html().substring(0, match.index + sizechange);
-           text+= btctext;
-           text+= element.html().substring(match.index + sizechange + match[0].length);
-
-           element.html(text);
-
-           sizechange += btctext.length - match[0].length;
-        };
-        console.log(element.html());
-        console.log("ELEMENT DONE -------");
-    });
-    return false;
-});
+start();

@@ -8,9 +8,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*"],
+      "matches": [ "http://*/*", "https://*/*" ],
       "run_at": "document_idle",
-      "js": ["libs/jquery-3.6.0.min.js", "content-script.js"]
+      "js": ["editor.js","converter.js", "content-script.js"]
     }
   ],
   "action": {
