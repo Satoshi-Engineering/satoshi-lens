@@ -1,13 +1,27 @@
-button {
-    height: 30px;
-    width: 30px;
-    outline: none;
-    margin: 10px;
-    border: none;
-    border-radius: 2px;
+body {
+    width: 288px;
+    height: 133px;
+    color: white;
 }
 
-button.current {
-    box-shadow: 0 0 0 2px white,
-    0 0 0 4px black;
+#list {
+    font-size: 15px;
+}
+
+body {
+    background: linear-gradient(-45deg, #f87416, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
