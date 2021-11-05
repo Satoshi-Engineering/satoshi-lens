@@ -1,9 +1,8 @@
 # how-much-btc
 
-- < 1.000.000 sats —> sats
+https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Chrome_incompatibilities
+https://github.com/mozilla/webextension-polyfill/
 
-- USD hinzufügen
-- Bei Start all currencies
+- < 1.000.000 sats —> sats
 - Variante von "23 von 40"
-- Schreib uns Button?
 - Firefox compatibility

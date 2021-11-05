@@ -1,11 +1,8 @@
-console.log("Content Script");
+console.log("HMTBC Running");
 
 let nodes = [];
 
-
 function start() {
-    //const probeEuro = /EUR|Euro|\€/g.test(document.body.textContent);
-
     // Entfernen bei erstem Laden der Seite
     let nodes = Editor.textNodesUnder(document);
     Editor.remove(nodes);

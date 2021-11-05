@@ -27,17 +27,41 @@ Converter.parseNumber = (input) => {
 }
 
 Converter.toBTC = (currency, factor) => {
-    let btc = currency / factor;
+    let value = currency / factor;
     let digits = 2;
+    let symbol = "BTC";
 
     // If smaller then 1 Million Satoshis
-    if (btc >= 0.01) {
-        let btcText = btc.toLocaleString('de-DE', {minimumFractionDigits: 2, maximumFractionDigits: digits});
-        return btcText + " BTC";
-    } else {
-        let sats = btc * 100000000.0;
-        if (sats >= 1) digits = 0;
-        sats = sats.toLocaleString('de-DE', {minimumFractionDigits: 0, maximumFractionDigits: digits});
-        return sats + " Satoshi";
+    if (value < 0.01) {
+        value *= 100000000.0;
+        if (value >= 1) digits = 0;
+        symbol = "Satoshi";
     }
+
+    if (value >= 10000) digits = 0;
+
+    if (value >= 1000000000000) {
+        value /= 1000000000000.0;
+
+        symbol = "Bio. " + symbol;
+        digits = 2;
+    }
+
+    if (value >= 1000000000) {
+        value /= 1000000000.0;
+
+        symbol = "Mrd. " + symbol;
+        digits = 2;
+    }
+
+    if (value >= 1000000) {
+        value /= 1000000.0;
+
+        symbol = "Mio. " + symbol;
+        digits = 2;
+    }
+
+    let valueText = value.toLocaleString('de-DE', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+
+    return valueText + " " + symbol;
 }

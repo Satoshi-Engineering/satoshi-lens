@@ -50,7 +50,7 @@ function updateRates() {
                 .then(result => {
                     const data = JSON.parse(result);
                     const keys = Object.keys(data.result);
-                    const rate = data.result[keys[0]].p[0];
+                    const rate = data.result[keys[0]].c[0];
                     saveCurrentRate(currencyKey, rate);
                 }).catch(error => console.error(`Error getting ${currencyKey}`, error));
         }
