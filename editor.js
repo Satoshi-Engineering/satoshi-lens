@@ -4,14 +4,28 @@ let Editor = {};
 
 Editor.currencies = {
     eur : {
-        symbols : ["Euro", "EUR", "€"],
-        rate : 53515.96
+        symbols : ["Euro", "EUR", "€", "USD", "Dollar"],
+        rate : -1
     },
     usd : {
         symbols : ["USD", "US Dollar", "U.S. Dollar"],
-        rate : 52000.42
+        rate : -1
     },
 }
+
+Editor.init = (finished) => {
+    chrome.storage.sync.get(['rates'], function(result) {
+        const ratesKeys = Object.keys(result.rates);
+        for (const [key, curr] of Object.entries(Editor.currencies)) {
+            if (ratesKeys.includes(key)) {
+                Editor.currencies[key].rate = result.rates[key];
+            }
+        }
+        console.log(Editor.currencies );
+        finished();
+    });
+}
+
 
 Editor.getSymbolRegex = (symbols) => {
     return "(" + symbols.join("|") + ")";
@@ -81,7 +95,6 @@ Editor.remove = function(nodes) {
 
             return Editor.formatReplacement(btcValue);
         });
-
 
         if (node.data !== s) {
             node.data = s;

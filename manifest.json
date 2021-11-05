@@ -3,6 +3,10 @@
   "description": "Online translator that inserts BTC for EUR and USD",
   "version": "1.0",
   "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
   "background": {
     "service_worker": "background.js"
   },

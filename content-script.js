@@ -1,10 +1,5 @@
 console.log("Content Script");
 
-
-let settings = {
-
-}
-
 let nodes = [];
 
 
@@ -45,4 +40,7 @@ function start() {
     }
 }
 
-start();
+Editor.init(() => {
+    start();
+});
+
