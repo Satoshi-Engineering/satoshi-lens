@@ -1,7 +1,7 @@
 {
   "name": "How much BTC",
-  "description": "Online translator that inserts BTC for EUR and USD",
-  "version": "1.0",
+  "description": "Online converter for for EUR and USD in BTC",
+  "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [
     "storage",

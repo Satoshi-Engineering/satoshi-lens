@@ -3,6 +3,12 @@ let numbersSimpleRegex = "([0-9]+)";
 
 let Editor = {};
 
+window.browser = (function () {
+    return window.msBrowser ||
+        window.browser ||
+        window.chrome;
+})();
+
 // Carefull, symbols must be regex compatible
 Editor.currencies = {
     eur : {
@@ -18,7 +24,7 @@ Editor.currencies = {
 }
 
 Editor.init = (finished) => {
-    chrome.storage.sync.get(['rates'], function(result) {
+    browser.storage.sync.get(['rates'], function(result) {
         const ratesKeys = Object.keys(result.rates);
         for (const [key, curr] of Object.entries(Editor.currencies)) {
             if (ratesKeys.includes(key)) {

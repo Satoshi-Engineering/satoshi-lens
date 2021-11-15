@@ -1,4 +1,9 @@
 console.log("HMTBC Running");
+window.browser = (function () {
+    return window.msBrowser ||
+        window.browser ||
+        window.chrome;
+})();
 
 let nodes = [];
 

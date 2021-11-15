@@ -1,3 +1,5 @@
+browser = chrome;
+
 const ALARM_RATES = "ratesRefresh";
 const currencies = {
     "eur": {
@@ -34,7 +36,7 @@ function updateRates() {
         storageRates[currencyKey] = rateAsNumber;
         storageRates.update = Date.now()
 
-        chrome.storage.sync.set({ rates: storageRates}, function() {
+        browser.storage.sync.set({ rates: storageRates}, function() {
             console.log(`Saved Rate ${rateAsNumber} for ${currencyKey}`);
         });
 
@@ -61,13 +63,13 @@ function updateRates() {
 }
 
 //chrome.storage.onChanged.addListener(updateSettings);
-chrome.runtime.onInstalled.addListener(() => {
+browser.runtime.onInstalled.addListener(() => {
     console.log('HMBTC Installed!');
-    chrome.alarms.create(ALARM_RATES, { periodInMinutes: 1 });
+    browser.alarms.create(ALARM_RATES, { periodInMinutes: 1 });
     updateRates();
 });
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+browser.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === ALARM_RATES) {
         updateRates();
     }
