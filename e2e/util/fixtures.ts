@@ -3,6 +3,13 @@ import { loadRateBtcFiat } from './rateBtcFiat'
 
 const extensionPath = new URL('../../.', import.meta.url).pathname
 
+const mockRates = {
+  result: {
+    XXBTZEUR: { c: ['98000.10000','0.00020037'] },
+    XXBTZUSD: { c: ['113410.80000','0.00032833'] }
+  }
+}
+
 export const test = base.extend<{
   context: BrowserContext
   extensionId: string
@@ -20,6 +27,16 @@ export const test = base.extend<{
         '--disable-features=IsolateOrigins,site-per-process',
       ],
     })
+
+    // ✅ Intercept Kraken API for ALL pages/frames
+    await context.route('https://api.kraken.com/**', route => {
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(mockRates),
+      })
+    })
+
     await use(context)
     await context.close()
   },
@@ -31,8 +48,8 @@ export const test = base.extend<{
     const extensionId = new URL(sw.url()).hostname
     await use(extensionId)
   },
-  btcFiatRates: async ({}, use) => {
-    const rates = await loadRateBtcFiat()
+  btcFiatRates: async ({ context }, use) => {
+    const rates = await loadRateBtcFiat({ context})
     await use(rates)
   }
 })
