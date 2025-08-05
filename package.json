@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "serve:static": "serve e2e/static -l 4173"
   },
   "repository": {
     "type": "git",
@@ -16,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/phorwath/how-much-btc/issues"
   },
-  "homepage": "https://github.com/phorwath/how-much-btc#readme"
+  "homepage": "https://github.com/phorwath/how-much-btc#readme",
+  "dependencies": {
+    "@playwright/test": "^1.54.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "serve": "^14.2.4"
+  }
 }
