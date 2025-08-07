@@ -31,5 +31,4 @@ test('simple cases - paragraph', async ({ page, btcFiatRates }) => {
   await expect(page.getByTestId('simple-cases-paragraph')).toContainText(`zu wiederhole ${$n(converter.eurToBtc(14444))} BTC n. Wer im`)
   await expect(page.getByTestId('simple-cases-paragraph')).toContainText(`Wer im Monat brutto ${$n(converter.eurToBtc(10_300.33))} BTC verdient und nichts spart`)
   await expect(page.getByTestId('simple-cases-paragraph')).toContainText(`Absicherungen im ${$n(converter.eurToSats(1.00), 0)} Satoshi Falle der Erwerbsunfähigkeit`)
-
 })
