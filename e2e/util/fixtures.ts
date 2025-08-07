@@ -1,14 +1,7 @@
 import { test as base, chromium, type BrowserContext } from '@playwright/test'
-import { loadRateBtcFiat } from './rateBtcFiat'
+import { mockedKrakenRates, mockKraken } from '../mocks/kraken'
 
 const extensionPath = new URL('../../.', import.meta.url).pathname
-
-const mockRates = {
-  result: {
-    XXBTZEUR: { c: ['98000.10000','0.00020037'] },
-    XXBTZUSD: { c: ['113410.80000','0.00032833'] }
-  }
-}
 
 export const test = base.extend<{
   context: BrowserContext
@@ -20,6 +13,7 @@ export const test = base.extend<{
       headless: false,
       channel: 'chromium',
       args: [
+        `--headless=new`,
         `--disable-extensions-except=${extensionPath}`,
         `--load-extension=${extensionPath}`,
         '--disable-web-security',
@@ -28,14 +22,11 @@ export const test = base.extend<{
       ],
     })
 
-    // ✅ Intercept Kraken API for ALL pages/frames
-    await context.route('https://api.kraken.com/**', route => {
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify(mockRates),
-      })
-    })
+    // Intercept Kraken API for ALL pages/frames
+    await mockKraken({ context })
+
+    // popup syncs the rates on load from the background script, but the background script is not ready immediately
+    await new Promise(resolve => setTimeout(resolve, 100))
 
     await use(context)
     await context.close()
@@ -48,9 +39,8 @@ export const test = base.extend<{
     const extensionId = new URL(sw.url()).hostname
     await use(extensionId)
   },
-  btcFiatRates: async ({ context }, use) => {
-    const rates = await loadRateBtcFiat({ context})
-    await use(rates)
+  btcFiatRates: async ({}, use) => {
+    await use(mockedKrakenRates)
   }
 })
 
