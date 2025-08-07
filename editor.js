@@ -105,6 +105,7 @@ Editor.removeForCurrency = function(nodes, activeCurreny) {
             if (substantive.toLowerCase().includes("bio."))     faitValue = faitValue * 1000000000000.0;
             if (substantive.toLowerCase().includes("billio"))   faitValue = faitValue * 1000000000000.0;
 
+            if (substantive.toLowerCase().includes("brd."))   faitValue = faitValue * 1000000000000000.0;
             if (substantive.toLowerCase().includes("billia"))   faitValue = faitValue * 1000000000000000.0;
 
             let btcValue = Converter.toBTC(faitValue, rate);
