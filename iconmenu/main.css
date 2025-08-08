@@ -1,11 +1,8 @@
 body {
     width: 288px;
-    height: 133px;
+    padding: 10px;
     color: #141A17;
     background-color: #FCFAF5;
     font-family: 'Arial', sans-serif;
-}
-
-#list {
     font-size: 15px;
 }

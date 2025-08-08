@@ -1,4 +1,4 @@
-function loaded() {
+async function loaded() {
     chrome.storage.sync.get(['rates'], function(result) {
         console.log(result.rates);
 
@@ -19,6 +19,22 @@ function loaded() {
             listDiv.appendChild(div);
         }
     });
+
+    initToggle();
+}
+
+const initToggle = async () => {
+    const toggle = document.getElementById('toggle')
+
+    // Load saved state
+    const { enabled = true } = await chrome.storage.sync.get('enabled')
+    toggle.checked = enabled
+
+    // Listen for toggle changes
+    toggle.addEventListener('change', async () => {
+      await chrome.storage.sync.set({ enabled: toggle.checked })
+      chrome.runtime.sendMessage({ type: 'TOGGLE_EXTENSION', enabled: toggle.checked })
+    })
 }
 
 document.addEventListener('DOMContentLoaded', loaded);

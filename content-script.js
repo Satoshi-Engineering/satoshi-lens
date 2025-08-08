@@ -42,7 +42,18 @@ function start() {
     }
 }
 
-Editor.init(() => {
-    start();
-});
+const initEditor = () => {
+  Editor.init(() => start());
+}
 
+chrome.storage.sync.get('enabled', ({ enabled = true }) => {
+  if (enabled) {
+    initEditor();
+  }
+})
+
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.enabled) {
+    window.location.reload();
+  }
+});

@@ -4,13 +4,19 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <h1>Satoshi Lens</h1>
-    <div id="list">
+    <h1 style="margin-block: 10px">Satoshi Lens</h1>
+    <div id="list" style="margin-block: 10px">
 
     </div>
-    <br>
-    <br>
-    Updated from kraken.com: <span id="updated"></span><br>
+    <div style="margin-block: 15px">
+      <label>
+        <input type="checkbox" id="toggle" data-testid="toggle"> Activate conversion
+        <small>(will reload the page)</small>
+      </label>
+    </div>
+    <small style="margin-block: 10px">
+      Updated from kraken.com: <span id="updated"></span><br>
+    </small>
     <script src="main.js"></script>
 </body>
 </html>
