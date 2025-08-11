@@ -1,6 +1,6 @@
 {
   "name": "Satoshi Lens",
-  "description": "Converts EUR and USD prices on any website into real-time Bitcoin (BTC) or Satoshi equivalents.",
+  "description": "Ersetzt EUR- und USD-Preise auf Webseiten automatisch durch ihren aktuellen Wert in Bitcoin (BTC) oder Satoshis.",
   "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [
