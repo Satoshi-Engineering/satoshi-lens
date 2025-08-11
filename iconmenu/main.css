@@ -1,8 +1,17 @@
 body {
-    width: 288px;
-    padding: 10px;
-    color: #141A17;
-    background-color: #FCFAF5;
-    font-family: 'Arial', sans-serif;
-    font-size: 15px;
+  width: 288px;
+  padding: 5px 10px;
+  color: #141A17;
+  background-color: #FCFAF5;
+  font-family: 'Arial', sans-serif;
+  font-size: 15px;
+}
+
+.emoji {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+.link {
+  color: #141A17;
+  text-decoration: underline;
 }

@@ -4,19 +4,40 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <h1 style="margin-block: 10px">Satoshi Lens</h1>
-    <div id="list" style="margin-block: 10px">
+  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+    <img src="../icons/icon128.png" alt="Satoshi Lens Icon" width="48" height="48">
+    <h1>Satoshi Lens</h1>
+  </div>
+  <div id="list" style="margin-block: 10px">
 
-    </div>
-    <div style="margin-block: 15px">
-      <label>
-        <input type="checkbox" id="toggle" data-testid="toggle"> Activate conversion
-        <small>(will reload the page)</small>
-      </label>
-    </div>
-    <small style="margin-block: 10px">
+  </div>
+  <div style="margin-block: 10px">
+    <small>
       Updated from kraken.com: <span id="updated"></span><br>
     </small>
-    <script src="main.js"></script>
+  </div>
+  <div style="margin-block: 15px">
+    <label>
+      <input type="checkbox" id="toggle"> Activate conversion
+      <small>(will reload the page)</small>
+    </label>
+  </div>
+  <footer style="margin-top: 10px; text-align: right;">
+    <div>
+      <small>
+        Built with
+        <span class="emoji">&#10084;</span>
+        by
+        <a class="link"href="https://satoshiengineering.com" target="_blank">Satoshi Engineering</a>
+      </small>
+    </div>
+    <div>
+      <small>
+        Open source on
+        <a class="link" href="https://github.com/satoshi-engineering/satoshi-lens" target="_blank">GitHub</a>
+      </small>
+    </div>
+  </footer>
+  <script src="main.js"></script>
 </body>
 </html>

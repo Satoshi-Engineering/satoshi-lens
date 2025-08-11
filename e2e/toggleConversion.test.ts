@@ -13,20 +13,20 @@ const getPages = async (context, extensionId) => {
 test('is enabled by default', async ({ context, extensionId }) => {
   const { page, popupPage } = await getPages(context, extensionId)
   
-  await expect(popupPage.getByTestId('toggle')).toBeChecked()
+  await expect(popupPage.locator('#toggle')).toBeChecked()
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 12,35 BTC')
 })
 
 test('will not convert if disabled', async ({ context, extensionId }) => {
   const { page, popupPage } = await getPages(context, extensionId)
-  await popupPage.getByTestId('toggle').uncheck()
+  await popupPage.locator('#toggle').uncheck()
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 1.234.567,89 EUR')
 })
 
 test('will convert if enabled', async ({ context, extensionId }) => {
   const { page, popupPage } = await getPages(context, extensionId)
-  await popupPage.getByTestId('toggle').check()
+  await popupPage.locator('#toggle').check()
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 12,35 BTC')
 })
@@ -36,7 +36,7 @@ test('will convert if enabled after page load', async ({ context, extensionId })
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 12,35 BTC')
 
-  await popupPage.getByTestId('toggle').uncheck()
+  await popupPage.locator('#toggle').uncheck()
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 1.234.567,89 EUR')
 })
@@ -46,7 +46,7 @@ test('will remove conversion if disabled after page load', async ({ context, ext
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 12,35 BTC')
 
-  await popupPage.getByTestId('toggle').uncheck()
+  await popupPage.locator('#toggle').uncheck()
 
   await expect(page.getByTestId('simple-cases-list')).toContainText('German Format - 1.234.567,89 EUR')
 })
