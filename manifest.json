@@ -1,6 +1,6 @@
 {
   "name": "Satoshi Lens",
-  "description": "Online converter for for EUR and USD in BTC",
+  "description": "Converts EUR and USD prices on any website into real-time Bitcoin (BTC) or Satoshi equivalents.",
   "version": "1.0.0",
   "manifest_version": 3,
   "permissions": [
