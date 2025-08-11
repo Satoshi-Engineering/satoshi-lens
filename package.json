@@ -20,10 +20,8 @@
     "url": "https://github.com/Satoshi-Engineering/satoshi-lens/issues"
   },
   "homepage": "https://github.com/Satoshi-Engineering/satoshi-lens#readme",
-  "dependencies": {
-    "@playwright/test": "^1.54.2"
-  },
   "devDependencies": {
+    "@playwright/test": "^1.54.2",
     "@types/node": "^24.2.0",
     "serve": "^14.2.4"
   }
