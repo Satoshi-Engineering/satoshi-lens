@@ -109,7 +109,3 @@ dist
 # playwright test results
 playwright-report/
 test-results/
-
-# OSX Files
-.DS_Store
-DS_Store
