@@ -1,14 +1,11 @@
-# satoshi-lens
+# Satoshi Lens – Fiatpreise in Bitcoin sehen
 
-## Next Steps
+Satoshi Lens ist eine Chrome-Erweiterung, die Preise in EUR (€) und USD ($) auf beliebigen Webseiten automatisch in ihren aktuellen Gegenwert in Bitcoin (BTC) oder Satoshis (sats) umrechnet.
 
-- < 1.000.000 sats —> sats
-- Variante von "23 von 40"
-- Firefox compatibility?
+Funktionen:
+💶 Erkennt EUR- und USD-Preise auf Webseiten
+⚡ Rechnet in Echtzeit mit aktuellen BTC-Kursen um
+🔒 Datenschutzfreundlich: kein Tracking, keine Datensammlung
+🌍 Funktioniert nahtlos auf den meisten Webseiten
 
-## Links
-
-### Cross Compatibility
-
-https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Chrome_incompatibilities
-https://github.com/mozilla/webextension-polyfill/
+Erlebe das Internet durch die Bitcoin-Linse – perfekt für Bitcoiner, Entwickler und alle, die neugierig auf BTC sind.
