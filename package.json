@@ -1,5 +1,5 @@
 {
-  "name": "how-much-btc",
+  "name": "satoshi-lens",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phorwath/how-much-btc.git"
+    "url": "git+https://github.com/Satoshi-Engineering/satoshi-lens.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/phorwath/how-much-btc/issues"
+    "url": "https://github.com/Satoshi-Engineering/satoshi-lens/issues"
   },
-  "homepage": "https://github.com/phorwath/how-much-btc#readme",
+  "homepage": "https://github.com/Satoshi-Engineering/satoshi-lens#readme",
   "dependencies": {
     "@playwright/test": "^1.54.2"
   },

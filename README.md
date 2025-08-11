@@ -1,4 +1,4 @@
-# how-much-btc
+# satoshi-lens
 
 ## Next Steps
 
